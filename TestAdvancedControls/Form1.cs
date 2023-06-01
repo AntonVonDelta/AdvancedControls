@@ -1,5 +1,6 @@
-﻿using AdvancedControls.AdvancedCombobox.CustomEventArgs;
+﻿using AdvancedControls.AdvancedCombobox;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -18,26 +19,28 @@ namespace TestAdvancedControls {
             InitializeComponent();
         }
 
-        private async void button1_Click(object sender, EventArgs e) {
-            Test();
-
-            await source.Task;
-
-            Debug.WriteLine("after");
-        }
-
-        async void Test() {
-            await Task.Delay(2000);
-            source.SetResult(true);
-            Debug.WriteLine("test");
-        }
-
         private void Form1_Load(object sender, EventArgs e) {
 
         }
 
-        private Task comboBox1_SelectedItemChanged(object sender, SelectedItemChangedEventArgs<string> e) {
-            return Task.CompletedTask;
+        private async void comboBox1_SelectedItemChanged(object sender, SelectedItemChangedEventArgs<string> e) {
+            using (e.GetDeferral()) {
+                await Task.Delay(5000);
+                //await comboBox1.SetDataSourceAsync(new BindingList<string>(llist));
+            }
+        }
+
+        private async void button1_Click(object sender, AdvancedControls.DeferralEventArgs e) {
+            using (e.GetDeferral()) {
+                var llist = new List<string>();
+
+                for (int i = 0; i < 100;i++) {
+                    llist.Add($"{i + 1} si {i + 2}");
+                    await Task.Yield();
+                }
+                await Task.Delay(2000);
+                await comboBox1.SetDataSourceAsync(new BindingList<string>(llist));
+            }
         }
     }
 }

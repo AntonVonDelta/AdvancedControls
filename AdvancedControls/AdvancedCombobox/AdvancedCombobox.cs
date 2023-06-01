@@ -1,5 +1,4 @@
-﻿using AdvancedControls.AdvancedCombobox.CustomEventArgs;
-using Microsoft.VisualStudio.Threading;
+﻿using AdvancedControls.AdvancedCombobox;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -12,17 +11,24 @@ using System.Windows.Forms;
 
 namespace AdvancedControls.AdvancedCombobox {
     public partial class AdvancedCombobox<T> : UserControl where T : class {
-        private Tuple<int, T> _selectedItemPair;
+        private Tuple<int, T> _selectedItemPair = null;
 
-        public AsyncEventHandler<SelectedItemChangedEventArgs<T>> SelectedItemChanged;
+        public event EventHandler<SelectedItemChangedEventArgs<T>> SelectedItemChanged;
+
 
         public AdvancedCombobox() {
             InitializeComponent();
         }
 
         private async Task OnSelectedItemChangedAsync(Tuple<int, T> newSelectedItem) {
-            if (SelectedItemChanged != null)
-                await SelectedItemChanged.InvokeAsync(this, new SelectedItemChangedEventArgs<T>(_selectedItemPair.Item2, newSelectedItem.Item2));
+            if (SelectedItemChanged != null) {
+                var args = new SelectedItemChangedEventArgs<T>(_selectedItemPair?.Item2, newSelectedItem.Item2);
+
+                Enabled = false;
+                SelectedItemChanged(this, args);
+                await args.WaitForDeferralsAsync();
+                Enabled = true;
+            }
         }
 
         public async Task SetDataSourceAsync(BindingList<T> data) {
@@ -35,7 +41,7 @@ namespace AdvancedControls.AdvancedCombobox {
             newSelectedIndex = comboBox1.SelectedIndex;
             newSelectedItemPair = Tuple.Create(newSelectedIndex, newSelectedItem);
 
-            if (!Compare(newSelectedItem, _selectedItemPair.Item2)) {
+            if (!Compare(newSelectedItem, _selectedItemPair?.Item2)) {
                 // Assign the new selected item and raise the event
                 _selectedItemPair = newSelectedItemPair;
                 await OnSelectedItemChangedAsync(newSelectedItemPair);
