@@ -12,9 +12,10 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement.ToolTip;
 namespace AdvancedControls.AdvancedButton {
     public partial class AdvancedButton : UserControl {
         private ValidityState _validityState = ValidityState.None;
-        private OverridableData<int> _borderSize = new OverridableData<int>();
-        private OverridableData<Color> _borderColor = new OverridableData<Color>();
-        private OverridableData<FlatStyle> _borderFlatStyle = new OverridableData<FlatStyle>(FlatStyle.Standard);
+        private bool _applyValidityBorder;
+        private Color _validityBorderColor;
+        private string _validityMessage;
+        private ToolTip _toolTip;
 
         /// <summary>
         /// Hide BorderStyle because the usercontrol will have the button's border
@@ -22,68 +23,61 @@ namespace AdvancedControls.AdvancedButton {
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public new BorderStyle BorderStyle { get; set; }
-
-        public int BorderSize {
-            get => _borderSize;
-            set {
-                _borderSize.Initial = value;
-                button1.FlatAppearance.BorderSize = _borderSize;
-                UpdateBorders();
-            }
-        }
-
-        public Color BorderColor {
-            get => _borderColor;
-            set {
-                _borderColor.Initial = value;
-                UpdateBorders();
-            }
-        }
-
-        public ToolTip StateToolTip { get; set; }
+        public int ValidityBorderSize { get; set; } = 4;
         public ValidityState ValidityState => _validityState;
+        public ToolTip StateToolTip {
+            get => _toolTip;
+            set => _toolTip = value;
+        }
+
 
         public new event EventHandler<DeferralEventArgs> Click;
 
 
         public AdvancedButton() {
             InitializeComponent();
+            button1.Paint += HandleButtonPaint;
+        }
+
+        public void ClearValidity() {
+            SetValidityState(ValidityState.None, null);
         }
 
         public void SetValidityState(ValidityState state, string message) {
             _validityState = state;
 
-            if (StateToolTip != null) {
-                StateToolTip.SetToolTip(this, message);
-            }
-
             switch (state) {
                 case ValidityState.None:
-                    _borderColor.RemoveOverload();
-                    _borderSize.RemoveOverload();
-                    _borderFlatStyle.RemoveOverload();
+                    _applyValidityBorder = false;
                     break;
 
                 case ValidityState.Error:
-                    _borderColor.SetOverload(Color.DarkRed);
-                    _borderSize.SetOverload(2);
-                    _borderFlatStyle.SetOverload(FlatStyle.Flat);
+                    _applyValidityBorder = true;
+                    _validityBorderColor = Color.Red;
                     break;
 
                 case ValidityState.Information:
-                    _borderColor.SetOverload(Color.Blue);
-                    _borderSize.SetOverload(2);
-                    _borderFlatStyle.SetOverload(FlatStyle.Flat);
+                    _applyValidityBorder = true;
+                    _validityBorderColor = Color.DodgerBlue;
                     break;
             }
 
-            UpdateBorders();
+            _toolTip?.SetToolTip(button1, message);
+
+            InvalidateAll();
         }
 
-        private void UpdateBorders() {
-            button1.FlatAppearance.BorderSize = _borderSize;
-            button1.FlatAppearance.BorderColor = _borderColor;
-            button1.FlatStyle = _borderFlatStyle;
+        private void InvalidateAll() {
+            button1.Invalidate();
+            Invalidate();
+        }
+
+        private void DrawBorder(Graphics graphics, Color color, int thickness) {
+            ControlPaint.DrawBorder(graphics, ClientRectangle,
+                color, thickness, ButtonBorderStyle.Solid,
+                color, thickness, ButtonBorderStyle.Solid,
+                color, thickness, ButtonBorderStyle.Solid,
+                color, thickness, ButtonBorderStyle.Solid);
         }
 
         private async Task OnClick() {
@@ -99,11 +93,11 @@ namespace AdvancedControls.AdvancedButton {
             }
         }
 
-        protected override void OnPaint(PaintEventArgs e) {
+        private void HandleButtonPaint(object sender, PaintEventArgs e) {
             base.OnPaint(e);
 
-            if (_borderStyle == BorderStyle.FixedSingle)
-                ControlPaint.DrawBorder(e.Graphics, ClientRectangle, _borderColor, ButtonBorderStyle.Solid);
+            if (_applyValidityBorder)
+                DrawBorder(e.Graphics, _validityBorderColor, ValidityBorderSize);
         }
 
         private async void button1_Click(object sender, EventArgs e) {

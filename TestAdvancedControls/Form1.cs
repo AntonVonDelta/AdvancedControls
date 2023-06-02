@@ -10,6 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace TestAdvancedControls {
     public partial class Form1 : Form {
@@ -20,6 +21,11 @@ namespace TestAdvancedControls {
         }
 
         private void Form1_Load(object sender, EventArgs e) {
+            // Set up the delays for the ToolTip.
+            toolTip1.AutoPopDelay = 5000;
+            toolTip1.InitialDelay = 500;
+            toolTip1.ReshowDelay = 250;
+
             button1.StateToolTip = toolTip1;
         }
 
@@ -33,7 +39,7 @@ namespace TestAdvancedControls {
             using (e.GetDeferral()) {
                 var llist = new List<string>();
 
-                button1.SetValidityState(AdvancedControls.ValidityState.Error, "Error sir!");
+                button1.SetValidityState(AdvancedControls.ValidityState.Information, "Error sir!");
 
                 return;
 
@@ -44,6 +50,10 @@ namespace TestAdvancedControls {
                 await Task.Delay(2000);
                 await comboBox1.SetDataSourceAsync(new BindingList<string>(llist));
             }
+        }
+
+        private void button2_Click(object sender, EventArgs e) {
+            button1.ClearValidity();
         }
     }
 }
