@@ -7,18 +7,28 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.ToolTip;
 
 namespace AdvancedControls.AdvancedButton {
     public partial class AdvancedButton : UserControl {
         private ValidityState _validityState = ValidityState.None;
-        private OverridableData<BorderStyle> _borderStyle = new OverridableData<BorderStyle>();
+        private OverridableData<int> _borderSize = new OverridableData<int>();
         private OverridableData<Color> _borderColor = new OverridableData<Color>();
+        private OverridableData<FlatStyle> _borderFlatStyle = new OverridableData<FlatStyle>(FlatStyle.Standard);
 
-        public new BorderStyle BorderStyle {
-            get => _borderStyle;
+        /// <summary>
+        /// Hide BorderStyle because the usercontrol will have the button's border
+        /// </summary>
+        [Browsable(false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public new BorderStyle BorderStyle { get; set; }
+
+        public int BorderSize {
+            get => _borderSize;
             set {
-                _borderStyle.Initial = value;
-                Invalidate();
+                _borderSize.Initial = value;
+                button1.FlatAppearance.BorderSize = _borderSize;
+                UpdateBorders();
             }
         }
 
@@ -26,7 +36,7 @@ namespace AdvancedControls.AdvancedButton {
             get => _borderColor;
             set {
                 _borderColor.Initial = value;
-                Invalidate();
+                UpdateBorders();
             }
         }
 
@@ -50,19 +60,30 @@ namespace AdvancedControls.AdvancedButton {
             switch (state) {
                 case ValidityState.None:
                     _borderColor.RemoveOverload();
-                    _borderStyle.RemoveOverload();
+                    _borderSize.RemoveOverload();
+                    _borderFlatStyle.RemoveOverload();
                     break;
 
                 case ValidityState.Error:
                     _borderColor.SetOverload(Color.DarkRed);
-                    _borderStyle.SetOverload(BorderStyle.FixedSingle);
+                    _borderSize.SetOverload(2);
+                    _borderFlatStyle.SetOverload(FlatStyle.Flat);
                     break;
 
                 case ValidityState.Information:
                     _borderColor.SetOverload(Color.Blue);
-                    _borderStyle.SetOverload(BorderStyle.FixedSingle);
+                    _borderSize.SetOverload(2);
+                    _borderFlatStyle.SetOverload(FlatStyle.Flat);
                     break;
             }
+
+            UpdateBorders();
+        }
+
+        private void UpdateBorders() {
+            button1.FlatAppearance.BorderSize = _borderSize;
+            button1.FlatAppearance.BorderColor = _borderColor;
+            button1.FlatStyle = _borderFlatStyle;
         }
 
         private async Task OnClick() {

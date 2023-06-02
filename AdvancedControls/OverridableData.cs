@@ -12,6 +12,13 @@ namespace AdvancedControls {
         public T Initial { get; set; }
 
 
+        public OverridableData(T initial) {
+            Initial = initial;
+        }
+
+        public OverridableData() {
+        }
+
         public void RemoveOverload() {
             _overloaded = false;
         }

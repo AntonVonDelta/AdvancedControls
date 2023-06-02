@@ -26,14 +26,16 @@ namespace TestAdvancedControls {
         private async void comboBox1_SelectedItemChanged(object sender, SelectedItemChangedEventArgs<string> e) {
             using (e.GetDeferral()) {
                 await Task.Delay(5000);
-                button1.SetValidityState(AdvancedControls.ValidityState.Error, "Error sir!");
-                //await comboBox1.SetDataSourceAsync(new BindingList<string>(llist));
             }
         }
 
         private async void button1_Click(object sender, AdvancedControls.DeferralEventArgs e) {
             using (e.GetDeferral()) {
                 var llist = new List<string>();
+
+                button1.SetValidityState(AdvancedControls.ValidityState.Error, "Error sir!");
+
+                return;
 
                 for (int i = 0; i < 100; i++) {
                     llist.Add($"{i + 1} si {i + 2}");

@@ -27,11 +27,18 @@ namespace TestAdvancedControls {
         /// </summary>
         private void InitializeComponent() {
             this.components = new System.ComponentModel.Container();
-            this.comboBox1 = new TestAdvancedControls.CustomControls.CastedAdvancedCombobox();
-            this.comboBox2 = new TestAdvancedControls.CustomControls.CastedAdvancedCombobox();
-            this.button1 = new AdvancedControls.AdvancedButton.AdvancedButton();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.comboBox2 = new TestAdvancedControls.CustomControls.CastedAdvancedCombobox();
+            this.comboBox1 = new TestAdvancedControls.CustomControls.CastedAdvancedCombobox();
+            this.button1 = new AdvancedControls.AdvancedButton.AdvancedButton();
             this.SuspendLayout();
+            // 
+            // comboBox2
+            // 
+            this.comboBox2.Location = new System.Drawing.Point(86, 152);
+            this.comboBox2.Name = "comboBox2";
+            this.comboBox2.Size = new System.Drawing.Size(373, 21);
+            this.comboBox2.TabIndex = 3;
             // 
             // comboBox1
             // 
@@ -41,18 +48,14 @@ namespace TestAdvancedControls {
             this.comboBox1.TabIndex = 2;
             this.comboBox1.SelectedItemChanged += new System.EventHandler<AdvancedControls.AdvancedCombobox.SelectedItemChangedEventArgs<string>>(this.comboBox1_SelectedItemChanged);
             // 
-            // comboBox2
-            // 
-            this.comboBox2.Location = new System.Drawing.Point(86, 152);
-            this.comboBox2.Name = "comboBox2";
-            this.comboBox2.Size = new System.Drawing.Size(373, 21);
-            this.comboBox2.TabIndex = 3;
-            // 
             // button1
             // 
+            this.button1.BorderColor = System.Drawing.SystemColors.Control;
+            this.button1.BorderSize = 0;
             this.button1.Location = new System.Drawing.Point(40, 12);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(298, 65);
+            this.button1.StateToolTip = null;
             this.button1.TabIndex = 4;
             this.button1.Click += new System.EventHandler<AdvancedControls.DeferralEventArgs>(this.button1_Click);
             // 
