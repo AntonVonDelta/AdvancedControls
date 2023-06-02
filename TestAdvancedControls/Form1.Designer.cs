@@ -26,9 +26,11 @@ namespace TestAdvancedControls {
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent() {
+            this.components = new System.ComponentModel.Container();
             this.comboBox1 = new TestAdvancedControls.CustomControls.CastedAdvancedCombobox();
             this.comboBox2 = new TestAdvancedControls.CustomControls.CastedAdvancedCombobox();
             this.button1 = new AdvancedControls.AdvancedButton.AdvancedButton();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.SuspendLayout();
             // 
             // comboBox1
@@ -73,5 +75,6 @@ namespace TestAdvancedControls {
         private CustomControls.CastedAdvancedCombobox comboBox1;
         private CustomControls.CastedAdvancedCombobox comboBox2;
         private AdvancedControls.AdvancedButton.AdvancedButton button1;
+        private System.Windows.Forms.ToolTip toolTip1;
     }
 }

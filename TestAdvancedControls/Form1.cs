@@ -20,12 +20,13 @@ namespace TestAdvancedControls {
         }
 
         private void Form1_Load(object sender, EventArgs e) {
-
+            button1.StateToolTip = toolTip1;
         }
 
         private async void comboBox1_SelectedItemChanged(object sender, SelectedItemChangedEventArgs<string> e) {
             using (e.GetDeferral()) {
                 await Task.Delay(5000);
+                button1.SetValidityState(AdvancedControls.ValidityState.Error, "Error sir!");
                 //await comboBox1.SetDataSourceAsync(new BindingList<string>(llist));
             }
         }
@@ -34,7 +35,7 @@ namespace TestAdvancedControls {
             using (e.GetDeferral()) {
                 var llist = new List<string>();
 
-                for (int i = 0; i < 100;i++) {
+                for (int i = 0; i < 100; i++) {
                     llist.Add($"{i + 1} si {i + 2}");
                     await Task.Yield();
                 }
