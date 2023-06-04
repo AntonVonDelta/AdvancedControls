@@ -103,7 +103,10 @@
     <Compile Include="OverridableData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ValidatedButton.cs">
-      <SubType>Component</SubType>
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ValidatedButton.Designer.cs">
+      <DependentUpon>ValidatedButton.cs</DependentUpon>
     </Compile>
     <Compile Include="ValidatedCombobox.cs">
       <SubType>UserControl</SubType>
@@ -119,6 +122,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="AdvancedCombobox\AdvancedCombobox.resx">
       <DependentUpon>AdvancedCombobox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ValidatedButton.resx">
+      <DependentUpon>ValidatedButton.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ValidatedCombobox.resx">
       <DependentUpon>ValidatedCombobox.cs</DependentUpon>

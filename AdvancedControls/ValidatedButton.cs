@@ -14,6 +14,13 @@ namespace AdvancedControls {
         private int _validityBorderSize = 4;
         private ToolTip _toolTip;
 
+        #region Properties
+        public bool UseVisualStyleBackColor {
+            get => button1.UseVisualStyleBackColor;
+            set => button1.UseVisualStyleBackColor = value;
+        }
+        #endregion
+
         #region ValidationProperties
         public ValidityState ValidityState => _validityState;
         public int ValidityBorderSize {

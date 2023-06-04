@@ -32,11 +32,11 @@
             this.comboBox1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.comboBox1.FormattingEnabled = true;
             this.comboBox1.Location = new System.Drawing.Point(0, 0);
-            this.comboBox1.Margin = new System.Windows.Forms.Padding(4);
+            this.comboBox1.Margin = new System.Windows.Forms.Padding(0);
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.SelectedIndex = -1;
             this.comboBox1.SelectedItem = null;
-            this.comboBox1.Size = new System.Drawing.Size(571, 25);
+            this.comboBox1.Size = new System.Drawing.Size(228, 25);
             this.comboBox1.StateToolTip = null;
             this.comboBox1.TabIndex = 0;
             this.comboBox1.ValidityBorderSize = 4;
@@ -49,7 +49,7 @@
             this.AutoSize = true;
             this.Controls.Add(this.comboBox1);
             this.Name = "AdvancedCombobox";
-            this.Size = new System.Drawing.Size(571, 139);
+            this.Size = new System.Drawing.Size(228, 64);
             this.ResumeLayout(false);
 
         }
