@@ -79,17 +79,6 @@ namespace AdvancedControls {
 
 
 
-        /// <summary>
-        /// Corrects the height dimension.
-        /// </summary>
-        protected override void SetBoundsCore(int x, int y, int width, int height, BoundsSpecified specified) {
-            height = Padding.Vertical +
-            (button1.Height + button1.Margin.Vertical) +
-                    _validityBorderSize;
-
-            base.SetBoundsCore(x, y, width, height, specified);
-        }
-
         private void Button1_Click(object sender, EventArgs e) {
             if (Click != null) Click(this, e);
         }

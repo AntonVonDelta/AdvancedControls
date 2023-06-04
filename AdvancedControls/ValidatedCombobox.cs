@@ -56,6 +56,8 @@ namespace AdvancedControls {
         public event EventHandler SelectedIndexChanged;
         #endregion
 
+
+
         public ValidatedCombobox() {
             InitializeComponent();
 
@@ -97,6 +99,7 @@ namespace AdvancedControls {
 
             base.SetBoundsCore(x, y, width, height, specified);
         }
+
 
 
         private void ComboBox1_SelectedIndexChanged(object sender, EventArgs e) {

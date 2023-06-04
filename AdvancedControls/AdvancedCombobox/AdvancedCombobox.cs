@@ -29,7 +29,10 @@ namespace AdvancedControls.AdvancedCombobox {
         }
         #endregion
 
+        #region Events
         public event EventHandler<SelectedItemChangedEventArgs<T>> SelectedItemChanged;
+        #endregion
+
 
 
         public AdvancedCombobox() {

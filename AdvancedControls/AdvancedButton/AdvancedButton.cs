@@ -6,14 +6,8 @@ using System.Windows.Forms;
 
 namespace AdvancedControls.AdvancedButton {
     public partial class AdvancedButton : UserControl {
-        private ValidityState _validityState = ValidityState.None;
 
-        /// <summary>
-        /// Hide BorderStyle because the usercontrol will have the combobox's border
-        /// </summary>
-        [Browsable(false)]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public new BorderStyle BorderStyle { get; set; }
+        #region Properties
         public ValidityState ValidityState => button1.ValidityState;
         public int ValidityBorderSize {
             get => button1.ValidityBorderSize;
@@ -23,9 +17,12 @@ namespace AdvancedControls.AdvancedButton {
             get => button1.StateToolTip;
             set => button1.StateToolTip = value;
         }
+        #endregion
 
-
+        #region Events
         public new event EventHandler<DeferralEventArgs> Click;
+        #endregion
+
 
 
         public AdvancedButton() {
