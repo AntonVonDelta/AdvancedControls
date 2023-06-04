@@ -6,7 +6,6 @@ using System.Windows.Forms;
 
 namespace AdvancedControls.AdvancedButton {
     public partial class AdvancedButton : UserControl {
-
         #region Properties
         public ValidityState ValidityState => button1.ValidityState;
         public int ValidityBorderSize {

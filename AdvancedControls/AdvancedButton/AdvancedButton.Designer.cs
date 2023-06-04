@@ -32,8 +32,7 @@
             this.button1.Location = new System.Drawing.Point(0, 0);
             this.button1.Margin = new System.Windows.Forms.Padding(0);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(397, 75);
-            this.button1.StateToolTip = null;
+            this.button1.Size = new System.Drawing.Size(208, 64);
             this.button1.TabIndex = 0;
             this.button1.UseVisualStyleBackColor = true;
             this.button1.ValidityBorderSize = 4;
@@ -45,7 +44,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.button1);
             this.Name = "AdvancedButton";
-            this.Size = new System.Drawing.Size(397, 98);
+            this.Size = new System.Drawing.Size(208, 64);
             this.ResumeLayout(false);
 
         }

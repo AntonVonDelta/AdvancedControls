@@ -26,7 +26,6 @@ namespace TestAdvancedControls {
             toolTip1.InitialDelay = 500;
             toolTip1.ReshowDelay = 250;
 
-            button1.StateToolTip = toolTip1;
             comboBox1.StateToolTip = toolTip1;
             comboBox1.SetValidityState(AdvancedControls.ValidityState.Information, "Tst infoirmation here");
         }

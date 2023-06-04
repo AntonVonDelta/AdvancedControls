@@ -44,7 +44,6 @@
             this.panelBorder.Location = new System.Drawing.Point(0, 179);
             this.panelBorder.Margin = new System.Windows.Forms.Padding(0);
             this.panelBorder.Name = "panelBorder";
-            this.panelBorder.Padding = new System.Windows.Forms.Padding(10);
             this.panelBorder.Size = new System.Drawing.Size(374, 15);
             this.panelBorder.TabIndex = 1;
             // 
@@ -52,7 +51,6 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.AutoSize = true;
             this.Controls.Add(this.button1);
             this.Controls.Add(this.panelBorder);
             this.Name = "ValidatedButton";

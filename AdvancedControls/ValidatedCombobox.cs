@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace AdvancedControls {
     public partial class ValidatedCombobox : UserControl {
+        private ToolTip _toolTip;
         private ValidityState _validityState = ValidityState.None;
         private int _validityBorderSize = 4;
-        private ToolTip _toolTip;
 
         #region Properties
         public bool FormattingEnabled {
@@ -86,7 +86,7 @@ namespace AdvancedControls {
                     break;
             }
 
-            _toolTip?.SetToolTip(this, message);
+            _toolTip?.SetToolTip(comboBox1, message);
         }
 
         /// <summary>
