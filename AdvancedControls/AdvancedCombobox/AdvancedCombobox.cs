@@ -1,17 +1,38 @@
-﻿using AdvancedControls.AdvancedCombobox;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace AdvancedControls.AdvancedCombobox {
     public partial class AdvancedCombobox<T> : UserControl where T : class {
         private Tuple<int, T> _selectedItemPair = null;
+        private OverridableData<bool> _enabled = new OverridableData<bool>(true);
+        private int _selectedItemChangedStack;
+
+
+        /// <summary>
+        /// Hide BorderStyle because the usercontrol will have the combobox's border
+        /// </summary>
+        [Browsable(false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public new BorderStyle BorderStyle { get; set; }
+        public ValidityState ValidityState => comboBox1.ValidityState;
+        public int ValidityBorderSize {
+            get => comboBox1.ValidityBorderSize;
+            set => comboBox1.ValidityBorderSize = value;
+        }
+        public ToolTip StateToolTip {
+            get => comboBox1.StateToolTip;
+            set => comboBox1.StateToolTip = value;
+        }
+
+        public new bool Enabled {
+            get => _enabled;
+            set {
+                _enabled.Initial = value;
+                base.Enabled = _enabled;
+            }
+        }
 
         public event EventHandler<SelectedItemChangedEventArgs<T>> SelectedItemChanged;
 
@@ -20,15 +41,12 @@ namespace AdvancedControls.AdvancedCombobox {
             InitializeComponent();
         }
 
-        private async Task OnSelectedItemChangedAsync(Tuple<int, T> newSelectedItem) {
-            if (SelectedItemChanged != null) {
-                var args = new SelectedItemChangedEventArgs<T>(_selectedItemPair?.Item2, newSelectedItem.Item2);
-
-                Enabled = false;
-                SelectedItemChanged(this, args);
-                await args.WaitForDeferralsAsync();
-                Enabled = true;
-            }
+        public void ClearValidity() {
+            SetValidityState(ValidityState.None, null);
+        }
+        public void SetValidityState(ValidityState state, string message) {
+            comboBox1.SetValidityState(state, message);
+            Invalidate();
         }
 
         public async Task SetDataSourceAsync(BindingList<T> data) {
@@ -63,6 +81,37 @@ namespace AdvancedControls.AdvancedCombobox {
         protected override void SetBoundsCore(int x, int y, int width, int height, BoundsSpecified specified) {
             height = comboBox1.Height;
             base.SetBoundsCore(x, y, width, height, specified);
+        }
+
+
+
+        private async Task OnSelectedItemChangedAsync(Tuple<int, T> newSelectedItem) {
+            if (SelectedItemChanged != null) {
+                var args = new SelectedItemChangedEventArgs<T>(_selectedItemPair?.Item2, newSelectedItem.Item2);
+
+                _selectedItemChangedStack++;
+                if (_selectedItemChangedStack == 1) {
+                    _enabled.SetOverload(false);
+                    base.Enabled = _enabled;
+                }
+
+                SelectedItemChanged(this, args);
+                await args.WaitForDeferralsAsync();
+
+                _selectedItemChangedStack--;
+                if (_selectedItemChangedStack == 0) {
+                    _enabled.RemoveOverload();
+                    base.Enabled = _enabled;
+                }
+            }
+        }
+
+        private async void comboBox1_SelectedIndexChanged(object sender, EventArgs e) {
+            var newSelectedItem = (T)comboBox1.SelectedItem;
+            var newSelectedIndex = comboBox1.SelectedIndex;
+            var newSelectedItemPair = Tuple.Create(newSelectedIndex, newSelectedItem);
+
+            await OnSelectedItemChangedAsync(newSelectedItemPair);
         }
     }
 }

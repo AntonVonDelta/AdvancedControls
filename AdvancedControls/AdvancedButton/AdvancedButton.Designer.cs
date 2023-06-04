@@ -23,7 +23,7 @@
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent() {
-            this.button1 = new System.Windows.Forms.Button();
+            this.button1 = new ValidatedButton();
             this.SuspendLayout();
             // 
             // button1
@@ -32,7 +32,7 @@
             this.button1.Location = new System.Drawing.Point(0, 0);
             this.button1.Margin = new System.Windows.Forms.Padding(0);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(154, 100);
+            this.button1.Size = new System.Drawing.Size(154, 91);
             this.button1.TabIndex = 0;
             this.button1.Text = "button1";
             this.button1.UseVisualStyleBackColor = true;
@@ -44,13 +44,13 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.button1);
             this.Name = "AdvancedButton";
-            this.Size = new System.Drawing.Size(154, 100);
+            this.Size = new System.Drawing.Size(154, 91);
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private System.Windows.Forms.Button button1;
+        private ValidatedButton button1;
     }
 }

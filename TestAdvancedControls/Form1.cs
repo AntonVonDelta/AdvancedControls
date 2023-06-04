@@ -27,6 +27,8 @@ namespace TestAdvancedControls {
             toolTip1.ReshowDelay = 250;
 
             button1.StateToolTip = toolTip1;
+            comboBox1.StateToolTip = toolTip1;
+            comboBox1.SetValidityState(AdvancedControls.ValidityState.Information, "Tst infoirmation here");
         }
 
         private async void comboBox1_SelectedItemChanged(object sender, SelectedItemChangedEventArgs<string> e) {
@@ -39,21 +41,24 @@ namespace TestAdvancedControls {
             using (e.GetDeferral()) {
                 var llist = new List<string>();
 
-                button1.SetValidityState(AdvancedControls.ValidityState.Information, "Error sir!");
-
-                return;
+                button1.SetValidityState(AdvancedControls.ValidityState.Error, "Error sir!");
 
                 for (int i = 0; i < 100; i++) {
                     llist.Add($"{i + 1} si {i + 2}");
-                    await Task.Yield();
                 }
+
                 await Task.Delay(2000);
+
                 await comboBox1.SetDataSourceAsync(new BindingList<string>(llist));
             }
         }
 
         private void button2_Click(object sender, EventArgs e) {
             button1.ClearValidity();
+        }
+
+        private void comboBox1_SelectedItemChanged(object sender, SelectedItemChangedEventArgs<T> e) {
+
         }
     }
 }

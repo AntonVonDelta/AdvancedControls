@@ -102,6 +102,15 @@
     <Compile Include="DeferralEventArgs.cs" />
     <Compile Include="OverridableData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ValidatedButton.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ValidatedCombobox.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ValidatedCombobox.Designer.cs">
+      <DependentUpon>ValidatedCombobox.cs</DependentUpon>
+    </Compile>
     <Compile Include="ValidityState.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -110,6 +119,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="AdvancedCombobox\AdvancedCombobox.resx">
       <DependentUpon>AdvancedCombobox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ValidatedCombobox.resx">
+      <DependentUpon>ValidatedCombobox.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

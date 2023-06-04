@@ -26,8 +26,7 @@ namespace TestAdvancedControls {
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent() {
-            this.components = new System.ComponentModel.Container();
-            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.toolTip1 = new System.Windows.Forms.ToolTip();
             this.comboBox2 = new TestAdvancedControls.CustomControls.CastedAdvancedCombobox();
             this.comboBox1 = new TestAdvancedControls.CustomControls.CastedAdvancedCombobox();
             this.button1 = new AdvancedControls.AdvancedButton.AdvancedButton();
@@ -36,17 +35,21 @@ namespace TestAdvancedControls {
             // 
             // comboBox2
             // 
-            this.comboBox2.Location = new System.Drawing.Point(86, 152);
+            this.comboBox2.Location = new System.Drawing.Point(88, 252);
             this.comboBox2.Name = "comboBox2";
             this.comboBox2.Size = new System.Drawing.Size(373, 21);
+            this.comboBox2.StateToolTip = null;
             this.comboBox2.TabIndex = 3;
+            this.comboBox2.ValidityBorderSize = 4;
             // 
             // comboBox1
             // 
             this.comboBox1.Location = new System.Drawing.Point(40, 107);
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(316, 21);
+            this.comboBox1.StateToolTip = null;
             this.comboBox1.TabIndex = 2;
+            this.comboBox1.ValidityBorderSize = 4;
             this.comboBox1.SelectedItemChanged += new System.EventHandler<AdvancedControls.AdvancedCombobox.SelectedItemChangedEventArgs<string>>(this.comboBox1_SelectedItemChanged);
             // 
             // button1
@@ -56,7 +59,7 @@ namespace TestAdvancedControls {
             this.button1.Size = new System.Drawing.Size(132, 36);
             this.button1.StateToolTip = null;
             this.button1.TabIndex = 4;
-            this.button1.ValidityBorderSize = 2;
+            this.button1.ValidityBorderSize = 6;
             this.button1.Click += new System.EventHandler<AdvancedControls.DeferralEventArgs>(this.button1_Click);
             // 
             // button2

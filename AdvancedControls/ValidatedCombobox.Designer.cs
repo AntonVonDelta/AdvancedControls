@@ -1,5 +1,5 @@
-﻿namespace AdvancedControls.AdvancedCombobox {
-    partial class AdvancedCombobox<T> {
+﻿namespace AdvancedControls {
+    partial class ValidatedCombobox {
         /// <summary> 
         /// Required designer variable.
         /// </summary>
@@ -23,35 +23,44 @@
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent() {
-            this.comboBox1 = new AdvancedControls.ValidatedCombobox();
+            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.panelBorder = new System.Windows.Forms.Panel();
             this.SuspendLayout();
             // 
             // comboBox1
             // 
-            this.comboBox1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.comboBox1.Dock = System.Windows.Forms.DockStyle.Top;
             this.comboBox1.FormattingEnabled = true;
             this.comboBox1.Location = new System.Drawing.Point(0, 0);
-            this.comboBox1.Margin = new System.Windows.Forms.Padding(4);
             this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(571, 21);
-            this.comboBox1.StateToolTip = null;
+            this.comboBox1.Size = new System.Drawing.Size(456, 21);
             this.comboBox1.TabIndex = 0;
-            this.comboBox1.ValidityBorderSize = 4;
-            this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
             // 
-            // AdvancedCombobox
+            // panelBorder
+            // 
+            this.panelBorder.BackColor = System.Drawing.Color.Red;
+            this.panelBorder.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panelBorder.Location = new System.Drawing.Point(0, 21);
+            this.panelBorder.Name = "panelBorder";
+            this.panelBorder.Size = new System.Drawing.Size(456, 11);
+            this.panelBorder.TabIndex = 1;
+            this.panelBorder.Visible = false;
+            // 
+            // ValidatedCombobox
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.panelBorder);
             this.Controls.Add(this.comboBox1);
-            this.Name = "AdvancedCombobox";
-            this.Size = new System.Drawing.Size(571, 139);
+            this.Name = "ValidatedCombobox";
+            this.Size = new System.Drawing.Size(456, 69);
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private ValidatedCombobox comboBox1;
+        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.Panel panelBorder;
     }
 }
