@@ -33,7 +33,6 @@ namespace AdvancedControls.AdvancedButton {
         }
         public void SetValidityState(ValidityState state, string message) {
             button1.SetValidityState(state, message);
-            Invalidate();
         }
 
 

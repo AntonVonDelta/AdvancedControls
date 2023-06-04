@@ -44,7 +44,6 @@ namespace AdvancedControls.AdvancedCombobox {
         }
         public void SetValidityState(ValidityState state, string message) {
             comboBox1.SetValidityState(state, message);
-            Invalidate();
         }
 
         public async Task SetDataSourceAsync(BindingList<T> data) {
