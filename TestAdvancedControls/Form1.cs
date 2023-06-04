@@ -56,9 +56,5 @@ namespace TestAdvancedControls {
         private void button2_Click(object sender, EventArgs e) {
             button1.ClearValidity();
         }
-
-        private void comboBox1_SelectedItemChanged(object sender, SelectedItemChangedEventArgs<T> e) {
-
-        }
     }
 }

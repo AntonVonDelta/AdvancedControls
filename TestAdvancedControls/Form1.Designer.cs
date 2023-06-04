@@ -26,31 +26,23 @@ namespace TestAdvancedControls {
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent() {
-            this.toolTip1 = new System.Windows.Forms.ToolTip();
+            this.components = new System.ComponentModel.Container();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.button2 = new System.Windows.Forms.Button();
+            this.button1 = new AdvancedControls.AdvancedButton.AdvancedButton();
             this.comboBox2 = new TestAdvancedControls.CustomControls.CastedAdvancedCombobox();
             this.comboBox1 = new TestAdvancedControls.CustomControls.CastedAdvancedCombobox();
-            this.button1 = new AdvancedControls.AdvancedButton.AdvancedButton();
-            this.button2 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
-            // comboBox2
+            // button2
             // 
-            this.comboBox2.Location = new System.Drawing.Point(88, 252);
-            this.comboBox2.Name = "comboBox2";
-            this.comboBox2.Size = new System.Drawing.Size(373, 21);
-            this.comboBox2.StateToolTip = null;
-            this.comboBox2.TabIndex = 3;
-            this.comboBox2.ValidityBorderSize = 4;
-            // 
-            // comboBox1
-            // 
-            this.comboBox1.Location = new System.Drawing.Point(40, 107);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(316, 21);
-            this.comboBox1.StateToolTip = null;
-            this.comboBox1.TabIndex = 2;
-            this.comboBox1.ValidityBorderSize = 4;
-            this.comboBox1.SelectedItemChanged += new System.EventHandler<AdvancedControls.AdvancedCombobox.SelectedItemChangedEventArgs<string>>(this.comboBox1_SelectedItemChanged);
+            this.button2.Location = new System.Drawing.Point(200, 12);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(132, 34);
+            this.button2.TabIndex = 5;
+            this.button2.Text = "button2";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // button1
             // 
@@ -62,15 +54,26 @@ namespace TestAdvancedControls {
             this.button1.ValidityBorderSize = 6;
             this.button1.Click += new System.EventHandler<AdvancedControls.DeferralEventArgs>(this.button1_Click);
             // 
-            // button2
+            // comboBox2
             // 
-            this.button2.Location = new System.Drawing.Point(200, 12);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(132, 34);
-            this.button2.TabIndex = 5;
-            this.button2.Text = "button2";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
+            this.comboBox2.AutoSize = true;
+            this.comboBox2.Location = new System.Drawing.Point(88, 252);
+            this.comboBox2.Name = "comboBox2";
+            this.comboBox2.Size = new System.Drawing.Size(373, 25);
+            this.comboBox2.StateToolTip = null;
+            this.comboBox2.TabIndex = 3;
+            this.comboBox2.ValidityBorderSize = 4;
+            // 
+            // comboBox1
+            // 
+            this.comboBox1.AutoSize = true;
+            this.comboBox1.Location = new System.Drawing.Point(40, 95);
+            this.comboBox1.Name = "comboBox1";
+            this.comboBox1.Size = new System.Drawing.Size(343, 25);
+            this.comboBox1.StateToolTip = null;
+            this.comboBox1.TabIndex = 2;
+            this.comboBox1.ValidityBorderSize = 2;
+            this.comboBox1.SelectedItemChanged += new System.EventHandler<AdvancedControls.AdvancedCombobox.SelectedItemChangedEventArgs<string>>(this.comboBox1_SelectedItemChanged);
             // 
             // Form1
             // 
@@ -85,6 +88,7 @@ namespace TestAdvancedControls {
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 

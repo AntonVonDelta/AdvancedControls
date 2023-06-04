@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -7,28 +9,41 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace AdvancedControls {
-    public class ValidatedButton : Button {
+    public partial class ValidatedButton : UserControl {
         private ValidityState _validityState = ValidityState.None;
-        private bool _applyValidityBorder;
-        private Color _validityBorderColor;
         private int _validityBorderSize = 4;
         private ToolTip _toolTip;
 
+        #region ValidationProperties
         public ValidityState ValidityState => _validityState;
         public int ValidityBorderSize {
             get => _validityBorderSize;
             set {
                 _validityBorderSize = value;
-                Margin = new Padding(_validityBorderSize);
+                panelBorder.Height = value;
+
+                Height = Padding.Vertical +
+                    (button1.Height + button1.Margin.Vertical) +
+                    _validityBorderSize;
             }
         }
         public ToolTip StateToolTip {
             get => _toolTip;
             set => _toolTip = value;
         }
+        #endregion
+
+        #region Events
+        public new event EventHandler Click;
+        #endregion
 
 
-        public ValidatedButton() { }
+
+        public ValidatedButton() {
+            InitializeComponent();
+
+            button1.Click += Button1_Click;
+        }
 
         public void ClearValidity() {
             SetValidityState(ValidityState.None, null);
@@ -38,39 +53,38 @@ namespace AdvancedControls {
 
             switch (state) {
                 case ValidityState.None:
-                    _applyValidityBorder = false;
+                    panelBorder.Visible = false;
                     break;
 
                 case ValidityState.Error:
-                    _applyValidityBorder = true;
-                    _validityBorderColor = Color.Red;
+                    panelBorder.BackColor = Color.Red;
+                    panelBorder.Visible = true;
                     break;
 
                 case ValidityState.Information:
-                    _applyValidityBorder = true;
-                    _validityBorderColor = Color.DodgerBlue;
+                    panelBorder.BackColor = Color.RoyalBlue;
+                    panelBorder.Visible = true;
                     break;
             }
 
             _toolTip?.SetToolTip(this, message);
-
-            Invalidate();
-        }
-
-        private void DrawBorder(Graphics graphics, Color color, int thickness) {
-            ControlPaint.DrawBorder(graphics, ClientRectangle,
-                color, thickness, ButtonBorderStyle.None,
-                color, thickness, ButtonBorderStyle.None,
-                color, thickness, ButtonBorderStyle.None,
-                color, thickness, ButtonBorderStyle.Solid);
         }
 
 
-        protected override void OnPaint(PaintEventArgs e) {
-            base.OnPaint(e);
 
-            if (_applyValidityBorder)
-                DrawBorder(e.Graphics, _validityBorderColor, _validityBorderSize);
+        /// <summary>
+        /// Corrects the height dimension.
+        /// </summary>
+        protected override void SetBoundsCore(int x, int y, int width, int height, BoundsSpecified specified) {
+            height = Padding.Vertical +
+            (button1.Height + button1.Margin.Vertical) +
+                    _validityBorderSize;
+
+            base.SetBoundsCore(x, y, width, height, specified);
+        }
+
+        private void Button1_Click(object sender, EventArgs e) {
+            if (Click != null) Click(this, e);
         }
     }
 }

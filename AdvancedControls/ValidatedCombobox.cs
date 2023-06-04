@@ -14,7 +14,26 @@ namespace AdvancedControls {
         private int _validityBorderSize = 4;
         private ToolTip _toolTip;
 
+        #region Properties
+        public bool FormattingEnabled {
+            get => comboBox1.FormattingEnabled;
+            set => comboBox1.FormattingEnabled = value;
+        }
+        public object DataSource {
+            get => comboBox1.DataSource;
+            set => comboBox1.DataSource = value;
+        }
+        public object SelectedItem {
+            get => comboBox1.SelectedItem;
+            set => comboBox1.SelectedItem = value;
+        }
+        public int SelectedIndex {
+            get => comboBox1.SelectedIndex;
+            set => comboBox1.SelectedIndex = value;
+        }
+        #endregion
 
+        #region ValidationProperties
         public ValidityState ValidityState => _validityState;
         public int ValidityBorderSize {
             get => _validityBorderSize;
@@ -31,10 +50,16 @@ namespace AdvancedControls {
             get => _toolTip;
             set => _toolTip = value;
         }
+        #endregion
 
+        #region Events
+        public event EventHandler SelectedIndexChanged;
+        #endregion
 
         public ValidatedCombobox() {
             InitializeComponent();
+
+            comboBox1.SelectedIndexChanged += ComboBox1_SelectedIndexChanged;
         }
 
         public void ClearValidity() {
@@ -54,7 +79,7 @@ namespace AdvancedControls {
                     break;
 
                 case ValidityState.Information:
-                    panelBorder.BackColor = Color.DodgerBlue;
+                    panelBorder.BackColor = Color.RoyalBlue;
                     panelBorder.Visible = true;
                     break;
             }
@@ -71,6 +96,11 @@ namespace AdvancedControls {
                     _validityBorderSize;
 
             base.SetBoundsCore(x, y, width, height, specified);
+        }
+
+
+        private void ComboBox1_SelectedIndexChanged(object sender, EventArgs e) {
+            if (SelectedIndexChanged != null) SelectedIndexChanged(this, e);
         }
     }
 }

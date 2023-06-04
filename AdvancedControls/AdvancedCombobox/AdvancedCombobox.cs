@@ -9,13 +9,7 @@ namespace AdvancedControls.AdvancedCombobox {
         private OverridableData<bool> _enabled = new OverridableData<bool>(true);
         private int _selectedItemChangedStack;
 
-
-        /// <summary>
-        /// Hide BorderStyle because the usercontrol will have the combobox's border
-        /// </summary>
-        [Browsable(false)]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public new BorderStyle BorderStyle { get; set; }
+        #region Properties
         public ValidityState ValidityState => comboBox1.ValidityState;
         public int ValidityBorderSize {
             get => comboBox1.ValidityBorderSize;
@@ -33,6 +27,7 @@ namespace AdvancedControls.AdvancedCombobox {
                 base.Enabled = _enabled;
             }
         }
+        #endregion
 
         public event EventHandler<SelectedItemChangedEventArgs<T>> SelectedItemChanged;
 
