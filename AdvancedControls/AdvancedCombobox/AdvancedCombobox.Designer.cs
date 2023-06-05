@@ -40,7 +40,7 @@
             this.comboBox1.StateToolTip = null;
             this.comboBox1.TabIndex = 0;
             this.comboBox1.ValidityBorderSize = 4;
-            this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
+            this.comboBox1.SelectionChangeCommitted += new System.EventHandler(this.comboBox1_SelectionChangeCommitted);
             // 
             // AdvancedCombobox
             // 

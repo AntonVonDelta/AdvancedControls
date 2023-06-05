@@ -54,14 +54,13 @@ namespace AdvancedControls {
 
         #region Events
         public event EventHandler SelectedIndexChanged;
+        public event EventHandler SelectionChangeCommitted;
         #endregion
 
 
 
         public ValidatedCombobox() {
             InitializeComponent();
-
-            comboBox1.SelectedIndexChanged += ComboBox1_SelectedIndexChanged;
         }
 
         public void ClearValidity() {
@@ -102,7 +101,11 @@ namespace AdvancedControls {
 
 
 
-        private void ComboBox1_SelectedIndexChanged(object sender, EventArgs e) {
+        private void comboBox1_SelectionChangeCommitted(object sender, EventArgs e) {
+            if (SelectionChangeCommitted != null) SelectionChangeCommitted(this, e);
+        }
+
+        private void comboBox1_SelectedIndexChanged_1(object sender, EventArgs e) {
             if (SelectedIndexChanged != null) SelectedIndexChanged(this, e);
         }
     }

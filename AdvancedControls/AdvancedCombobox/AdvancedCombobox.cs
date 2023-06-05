@@ -57,9 +57,32 @@ namespace AdvancedControls.AdvancedCombobox {
             newSelectedItemPair = Tuple.Create(newSelectedIndex, newSelectedItem);
 
             if (!Compare(newSelectedItem, _selectedItemPair?.Item2)) {
+                var args = new SelectedItemChangedEventArgs<T>(_selectedItemPair?.Item2, newSelectedItem);
+
                 // Assign the new selected item and raise the event
                 _selectedItemPair = newSelectedItemPair;
-                await OnSelectedItemChangedAsync(newSelectedItemPair);
+
+                await OnSelectedItemChangedAsync(args);
+            }
+        }
+        public async Task SetSelectedItem(T item) {
+            T newSelectedItem;
+            int newSelectedIndex;
+            Tuple<int, T> newSelectedItemPair;
+
+            comboBox1.SelectedItem = item;
+
+            newSelectedItem = (T)comboBox1.SelectedItem;
+            newSelectedIndex = comboBox1.SelectedIndex;
+            newSelectedItemPair = Tuple.Create(newSelectedIndex, newSelectedItem);
+
+            if (!Compare(newSelectedItem, _selectedItemPair?.Item2)) {
+                var args = new SelectedItemChangedEventArgs<T>(newSelectedItem, _selectedItemPair?.Item2);
+
+                // Assign the new selected item and raise the event
+                _selectedItemPair = newSelectedItemPair;
+
+                await OnSelectedItemChangedAsync(args);
             }
         }
 
@@ -82,10 +105,8 @@ namespace AdvancedControls.AdvancedCombobox {
 
 
 
-        private async Task OnSelectedItemChangedAsync(Tuple<int, T> newSelectedItem) {
+        private async Task OnSelectedItemChangedAsync(SelectedItemChangedEventArgs<T> args) {
             if (SelectedItemChanged != null) {
-                var args = new SelectedItemChangedEventArgs<T>(_selectedItemPair?.Item2, newSelectedItem.Item2);
-
                 _selectedItemChangedStack++;
                 if (_selectedItemChangedStack == 1) {
                     _enabled.SetOverload(false);
@@ -103,12 +124,16 @@ namespace AdvancedControls.AdvancedCombobox {
             }
         }
 
-        private async void comboBox1_SelectedIndexChanged(object sender, EventArgs e) {
+        private async void comboBox1_SelectionChangeCommitted(object sender, EventArgs e) {
             var newSelectedItem = (T)comboBox1.SelectedItem;
             var newSelectedIndex = comboBox1.SelectedIndex;
             var newSelectedItemPair = Tuple.Create(newSelectedIndex, newSelectedItem);
+            var args = new SelectedItemChangedEventArgs<T>(newSelectedItem, _selectedItemPair?.Item2);
 
-            await OnSelectedItemChangedAsync(newSelectedItemPair);
+            // Assign the new selected item and raise the event
+            _selectedItemPair = newSelectedItemPair;
+
+            await OnSelectedItemChangedAsync(args);
         }
     }
 }
