@@ -6,6 +6,6 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace TestAdvancedControls.CustomControls {
-    internal class CastedAdvancedCombobox : AdvancedCombobox<string> {
+    internal class StringAdvancedCombobox : AdvancedCombobox<string> {
     }
 }

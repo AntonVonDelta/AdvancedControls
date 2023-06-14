@@ -57,7 +57,7 @@
             this.Controls.Add(this.panelBorder);
             this.Controls.Add(this.comboBox1);
             this.Name = "ValidatedCombobox";
-            this.Size = new System.Drawing.Size(456, 69);
+            this.Size = new System.Drawing.Size(456, 56);
             this.ResumeLayout(false);
 
         }

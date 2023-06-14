@@ -83,7 +83,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CustomControls\CastedAdvancedCombobox.cs">
+    <Compile Include="CustomControls\StringAdvancedCombobox.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Form1.cs">

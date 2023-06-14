@@ -30,8 +30,8 @@ namespace TestAdvancedControls {
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.button2 = new System.Windows.Forms.Button();
             this.button1 = new AdvancedControls.AdvancedButton.AdvancedButton();
-            this.comboBox2 = new TestAdvancedControls.CustomControls.CastedAdvancedCombobox();
-            this.comboBox1 = new TestAdvancedControls.CustomControls.CastedAdvancedCombobox();
+            this.comboBox2 = new TestAdvancedControls.CustomControls.StringAdvancedCombobox();
+            this.comboBox1 = new TestAdvancedControls.CustomControls.StringAdvancedCombobox();
             this.SuspendLayout();
             // 
             // button2
@@ -53,23 +53,27 @@ namespace TestAdvancedControls {
             this.button1.TabIndex = 4;
             this.button1.ValidityBorderSize = 3;
             this.button1.Click += new System.EventHandler<AdvancedControls.DeferralEventArgs>(this.button1_Click);
+            this.button1.Load += new System.EventHandler(this.button1_Load);
             // 
             // comboBox2
             // 
             this.comboBox2.AutoSize = true;
-            this.comboBox2.Location = new System.Drawing.Point(40, 145);
+            this.comboBox2.FireOnLeaveOnly = true;
+            this.comboBox2.Location = new System.Drawing.Point(12, 186);
             this.comboBox2.Name = "comboBox2";
-            this.comboBox2.Size = new System.Drawing.Size(373, 25);
+            this.comboBox2.Size = new System.Drawing.Size(307, 25);
             this.comboBox2.StateToolTip = null;
             this.comboBox2.TabIndex = 3;
             this.comboBox2.ValidityBorderSize = 4;
+            this.comboBox2.Load += new System.EventHandler(this.comboBox2_Load);
             // 
             // comboBox1
             // 
             this.comboBox1.AutoSize = true;
-            this.comboBox1.Location = new System.Drawing.Point(40, 82);
+            this.comboBox1.FireOnLeaveOnly = true;
+            this.comboBox1.Location = new System.Drawing.Point(373, 188);
             this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(343, 23);
+            this.comboBox1.Size = new System.Drawing.Size(307, 23);
             this.comboBox1.StateToolTip = null;
             this.comboBox1.TabIndex = 2;
             this.comboBox1.ValidityBorderSize = 2;
@@ -79,7 +83,7 @@ namespace TestAdvancedControls {
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(763, 289);
+            this.ClientSize = new System.Drawing.Size(935, 542);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.comboBox2);
@@ -93,8 +97,8 @@ namespace TestAdvancedControls {
         }
 
         #endregion
-        private CustomControls.CastedAdvancedCombobox comboBox1;
-        private CustomControls.CastedAdvancedCombobox comboBox2;
+        private CustomControls.StringAdvancedCombobox comboBox1;
+        private CustomControls.StringAdvancedCombobox comboBox2;
         private AdvancedControls.AdvancedButton.AdvancedButton button1;
         private System.Windows.Forms.ToolTip toolTip1;
         private System.Windows.Forms.Button button2;

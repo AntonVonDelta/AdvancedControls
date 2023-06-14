@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace AdvancedControls {
-    public class DeferralEventArgs : EventArgs {
+    public class DeferralEventArgs {
         private readonly DeferralManager _manager = new DeferralManager();
 
         public IDisposable GetDeferral() {

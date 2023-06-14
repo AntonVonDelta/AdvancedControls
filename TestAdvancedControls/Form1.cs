@@ -55,5 +55,13 @@ namespace TestAdvancedControls {
         private void button2_Click(object sender, EventArgs e) {
             button1.ClearValidity();
         }
+
+        private void button1_Load(object sender, EventArgs e) {
+
+        }
+
+        private void comboBox2_Load(object sender, EventArgs e) {
+
+        }
     }
 }

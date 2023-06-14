@@ -6,6 +6,7 @@ using System.Windows.Forms;
 namespace AdvancedControls.AdvancedCombobox {
     public partial class AdvancedCombobox<T> : UserControl where T : class {
         private Tuple<int, T> _selectedItemPair = null;
+        private Tuple<int, T> _previousSelectedItemPair = null;
         private OverridableData<bool> _enabled = new OverridableData<bool>(true);
         private int _selectedItemChangedStack;
 
@@ -20,6 +21,12 @@ namespace AdvancedControls.AdvancedCombobox {
             set => comboBox1.StateToolTip = value;
         }
 
+        /// <summary>
+        /// Enables or disables the control.
+        /// This value does not supersede the internal mechanism for reentrancy-avoidance
+        /// (aka disabling the button when an async operation is in execution).
+        /// Issues may appear though when this control is disabled through its base Enabled property
+        /// </summary>
         public new bool Enabled {
             get => _enabled;
             set {
@@ -27,6 +34,13 @@ namespace AdvancedControls.AdvancedCombobox {
                 base.Enabled = _enabled;
             }
         }
+
+        /// <summary>
+        /// Determines whether the control only fires on leave event.
+        /// The selected item is however always synchronized with the view
+        /// so even though the event was not raised the properties will return the current visible value.
+        /// </summary>
+        public bool FireOnLeaveOnly { get; set; }
         #endregion
 
         #region Events
@@ -89,7 +103,7 @@ namespace AdvancedControls.AdvancedCombobox {
         /// <summary>
         /// Compile-friendly compare procedure.
         /// This wrapper is needed to avoid possible bugs when the generic variable is compared to another type
-        /// which with other methods is automatically upcasted to object (.Eqauls, ==)
+        /// which with other methods is automatically upcasted to object (.Equals, ==)
         /// </summary>
         private bool Compare(T val1, T val2) {
             return val1 == val2;
@@ -130,9 +144,25 @@ namespace AdvancedControls.AdvancedCombobox {
             var newSelectedItemPair = Tuple.Create(newSelectedIndex, newSelectedItem);
             var args = new SelectedItemChangedEventArgs<T>(newSelectedItem, _selectedItemPair?.Item2);
 
+            if (FireOnLeaveOnly) _previousSelectedItemPair = _selectedItemPair;
+
             // Assign the new selected item and raise the event
             _selectedItemPair = newSelectedItemPair;
 
+            if (!FireOnLeaveOnly) {
+                await OnSelectedItemChangedAsync(args);
+            }
+        }
+
+        private async void comboBox1_Leave(object sender, EventArgs e) {
+            var tempPreviousItem = _previousSelectedItemPair;
+
+            if (tempPreviousItem == null) return;
+
+            // Reset previous value so that this case is identified next time
+            _previousSelectedItemPair = null;
+
+            var args = new SelectedItemChangedEventArgs<T>(_selectedItemPair?.Item2, tempPreviousItem.Item2);
             await OnSelectedItemChangedAsync(args);
         }
     }
