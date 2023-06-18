@@ -33,7 +33,7 @@
             this.button1.Location = new System.Drawing.Point(0, 0);
             this.button1.Margin = new System.Windows.Forms.Padding(0);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(374, 179);
+            this.button1.Size = new System.Drawing.Size(328, 109);
             this.button1.TabIndex = 0;
             this.button1.Text = "button1";
             this.button1.UseVisualStyleBackColor = true;
@@ -41,10 +41,10 @@
             // panelBorder
             // 
             this.panelBorder.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panelBorder.Location = new System.Drawing.Point(0, 179);
+            this.panelBorder.Location = new System.Drawing.Point(0, 109);
             this.panelBorder.Margin = new System.Windows.Forms.Padding(0);
             this.panelBorder.Name = "panelBorder";
-            this.panelBorder.Size = new System.Drawing.Size(374, 15);
+            this.panelBorder.Size = new System.Drawing.Size(328, 10);
             this.panelBorder.TabIndex = 1;
             // 
             // ValidatedButton
@@ -54,7 +54,9 @@
             this.Controls.Add(this.button1);
             this.Controls.Add(this.panelBorder);
             this.Name = "ValidatedButton";
-            this.Size = new System.Drawing.Size(374, 194);
+            this.Size = new System.Drawing.Size(328, 119);
+            this.MouseEnter += new System.EventHandler(this.ValidatedButton_MouseEnter);
+            this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.ValidatedButton_MouseMove);
             this.ResumeLayout(false);
 
         }

@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace AdvancedControls.AdvancedCombobox {
+    [DefaultEvent(nameof(SelectedItemChanged))]
     public partial class AdvancedCombobox<T> : UserControl where T : class {
         private Tuple<int, T> _selectedItemPair = null;
         private Tuple<int, T> _previousSelectedItemPair = null;
@@ -66,6 +67,7 @@ namespace AdvancedControls.AdvancedCombobox {
             Tuple<int, T> newSelectedItemPair;
 
             comboBox1.DataSource = data;
+
             newSelectedItem = (T)comboBox1.SelectedItem;
             newSelectedIndex = comboBox1.SelectedIndex;
             newSelectedItemPair = Tuple.Create(newSelectedIndex, newSelectedItem);

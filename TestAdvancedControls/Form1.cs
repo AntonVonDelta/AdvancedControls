@@ -15,19 +15,23 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 namespace TestAdvancedControls {
     public partial class Form1 : Form {
         TaskCompletionSource<object> source = new TaskCompletionSource<object>();
+        BindingList<string> test = new BindingList<string>();
 
         public Form1() {
             InitializeComponent();
         }
 
-        private void Form1_Load(object sender, EventArgs e) {
+        private async void Form1_Load(object sender, EventArgs e) {
             // Set up the delays for the ToolTip.
             toolTip1.AutoPopDelay = 5000;
             toolTip1.InitialDelay = 500;
             toolTip1.ReshowDelay = 250;
 
+            button1.StateToolTip = toolTip1;
+
             comboBox1.StateToolTip = toolTip1;
             comboBox1.SetValidityState(AdvancedControls.ValidityState.Information, "Tst infoirmation here");
+            await comboBox1.SetDataSourceAsync(test);
         }
 
         private async void comboBox1_SelectedItemChanged(object sender, SelectedItemChangedEventArgs<string> e) {
@@ -38,30 +42,21 @@ namespace TestAdvancedControls {
 
         private async void button1_Click(object sender, AdvancedControls.DeferralEventArgs e) {
             using (e.GetDeferral()) {
-                var llist = new List<string>();
-
                 button1.SetValidityState(AdvancedControls.ValidityState.Error, "Error sir!");
 
-                for (int i = 0; i < 100; i++) {
-                    llist.Add($"{i + 1} si {i + 2}");
+                await Task.Delay(10000);
+
+                test.RaiseListChangedEvents = false;
+                for (int i = 0; i < 10000; i++) {
+                    test.Add($"{i + 1} si {i + 2}");
                 }
-
-                await Task.Delay(2000);
-
-                await comboBox1.SetDataSourceAsync(new BindingList<string>(llist));
+                test.RaiseListChangedEvents = true;
+                test.ResetBindings();
             }
         }
 
         private void button2_Click(object sender, EventArgs e) {
             button1.ClearValidity();
-        }
-
-        private void button1_Load(object sender, EventArgs e) {
-
-        }
-
-        private void comboBox2_Load(object sender, EventArgs e) {
-
         }
     }
 }
