@@ -11,8 +11,10 @@ using System.Windows.Forms;
 namespace AdvancedControls {
     public partial class ValidatedCombobox : UserControl {
         private ToolTip _toolTip;
+        private string _validityMessage = "";
         private ValidityState _validityState = ValidityState.None;
         private int _validityBorderSize = 4;
+        private Control _currentToolTipControl;
 
         #region Properties
         public bool FormattingEnabled {
@@ -105,8 +107,33 @@ namespace AdvancedControls {
             if (SelectionChangeCommitted != null) SelectionChangeCommitted(this, e);
         }
 
-        private void comboBox1_SelectedIndexChanged_1(object sender, EventArgs e) {
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e) {
             if (SelectedIndexChanged != null) SelectedIndexChanged(this, e);
+        }
+
+        private async void ValidatedCombobox_MouseMove(object sender, MouseEventArgs e) {
+            Control control = GetChildAtPoint(e.Location);
+
+            if (control == null) return;
+
+            // Show the tooltip regardless of whether the control is enabled or not
+            // Tooltip has serious issues - it seems its dependednt on messages being pumped
+            // after SetToolTip is called. Solved only by calling SetToolTip twice.
+            if (!control.Enabled && _currentToolTipControl == null) {
+                _currentToolTipControl = control;
+
+                _toolTip?.SetToolTip(this, _validityMessage);
+                await Task.Delay(1);
+
+                _toolTip?.SetToolTip(this, _validityMessage);
+                await Task.Delay(_toolTip.AutoPopDelay);
+
+                _currentToolTipControl = null;
+            }
+        }
+
+        private void ValidatedCombobox_MouseEnter(object sender, EventArgs e) {
+            _toolTip?.SetToolTip(this, _validityMessage);
         }
     }
 }

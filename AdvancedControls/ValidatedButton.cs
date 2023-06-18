@@ -13,8 +13,8 @@ using System.Windows.Forms;
 namespace AdvancedControls {
     public partial class ValidatedButton : UserControl {
         private ToolTip _toolTip;
-        private ValidityState _validityState = ValidityState.None;
         private string _validityMessage = "";
+        private ValidityState _validityState = ValidityState.None;
         private int _validityBorderSize = 4;
         private Control _currentToolTipControl;
 
@@ -88,10 +88,7 @@ namespace AdvancedControls {
             }
 
             _validityMessage = message;
-
-            if (_toolTip != null) _toolTip.ShowAlways = true;
-            //_toolTip?.SetToolTip(button1, _validityMessage);
-            //_toolTip?.SetToolTip(this, _validityMessage);
+            _toolTip?.SetToolTip(button1, _validityMessage);
         }
 
 
@@ -105,28 +102,17 @@ namespace AdvancedControls {
 
             if (control == null) return;
 
-            //if (_currentToolTipControl != null && _currentToolTipControl != control) {
-            //    Debug.WriteLine("hide");
-            //    _toolTip?.Hide(_currentToolTipControl);
-            //    _currentToolTipControl = null;
-            //}
-
             // Show the tooltip regardless of whether the control is enabled or not
+            // Tooltip has serious issues - it seems its dependednt on messages being pumped
+            // after SetToolTip is called. Solved only by calling SetToolTip twice.
             if (!control.Enabled && _currentToolTipControl == null) {
-                Debug.WriteLine("show");
                 _currentToolTipControl = control;
-
-                //await Task.Delay(2000);
-                //_toolTip?.Show(_validityMessage, this, 1000);
 
                 _toolTip?.SetToolTip(this, _validityMessage);
                 await Task.Delay(1);
+
                 _toolTip?.SetToolTip(this, _validityMessage);
                 await Task.Delay(_toolTip.AutoPopDelay);
-
-                for (int i = 0; i < 5; i++) {
-
-                }
 
                 _currentToolTipControl = null;
             }

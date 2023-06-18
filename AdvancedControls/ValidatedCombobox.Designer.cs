@@ -36,7 +36,7 @@
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(456, 21);
             this.comboBox1.TabIndex = 0;
-            this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged_1);
+            this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
             this.comboBox1.SelectionChangeCommitted += new System.EventHandler(this.comboBox1_SelectionChangeCommitted);
             // 
             // panelBorder
@@ -58,6 +58,8 @@
             this.Controls.Add(this.comboBox1);
             this.Name = "ValidatedCombobox";
             this.Size = new System.Drawing.Size(456, 56);
+            this.MouseEnter += new System.EventHandler(this.ValidatedCombobox_MouseEnter);
+            this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.ValidatedCombobox_MouseMove);
             this.ResumeLayout(false);
 
         }

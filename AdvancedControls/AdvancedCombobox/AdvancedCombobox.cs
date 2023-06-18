@@ -10,6 +10,8 @@ namespace AdvancedControls.AdvancedCombobox {
         private Tuple<int, T> _previousSelectedItemPair = null;
         private OverridableData<bool> _enabled = new OverridableData<bool>(true);
         private int _selectedItemChangedStack;
+        private bool _fireOnLeaveOnly;
+        private bool _pendingFire;
 
         #region Properties
         public ValidityState ValidityState => comboBox1.ValidityState;
@@ -41,7 +43,19 @@ namespace AdvancedControls.AdvancedCombobox {
         /// The selected item is however always synchronized with the view
         /// so even though the event was not raised the properties will return the current visible value.
         /// </summary>
-        public bool FireOnLeaveOnly { get; set; }
+        public bool FireOnLeaveOnly {
+            get => _fireOnLeaveOnly;
+            set {
+                _fireOnLeaveOnly = value;
+
+                if (!_fireOnLeaveOnly && _pendingFire)
+                    throw new Exception("Cannot change this property now because there's a pending commit on the control");
+
+                // Synchronize the two values at this point
+                if (_fireOnLeaveOnly)
+                    _previousSelectedItemPair = _selectedItemPair;
+            }
+        }
         #endregion
 
         #region Events
@@ -122,21 +136,21 @@ namespace AdvancedControls.AdvancedCombobox {
 
 
         private async Task OnSelectedItemChangedAsync(SelectedItemChangedEventArgs<T> args) {
-            if (SelectedItemChanged != null) {
-                _selectedItemChangedStack++;
-                if (_selectedItemChangedStack == 1) {
-                    _enabled.SetOverload(false);
-                    base.Enabled = _enabled;
-                }
+            _selectedItemChangedStack++;
+            if (_selectedItemChangedStack == 1) {
+                _enabled.SetOverload(false);
+                base.Enabled = _enabled;
+            }
 
+            if (SelectedItemChanged != null) {
                 SelectedItemChanged(this, args);
                 await args.WaitForDeferralsAsync();
+            }
 
-                _selectedItemChangedStack--;
-                if (_selectedItemChangedStack == 0) {
-                    _enabled.RemoveOverload();
-                    base.Enabled = _enabled;
-                }
+            _selectedItemChangedStack--;
+            if (_selectedItemChangedStack == 0) {
+                _enabled.RemoveOverload();
+                base.Enabled = _enabled;
             }
         }
 
@@ -146,7 +160,10 @@ namespace AdvancedControls.AdvancedCombobox {
             var newSelectedItemPair = Tuple.Create(newSelectedIndex, newSelectedItem);
             var args = new SelectedItemChangedEventArgs<T>(newSelectedItem, _selectedItemPair?.Item2);
 
-            if (FireOnLeaveOnly) _previousSelectedItemPair = _selectedItemPair;
+            if (FireOnLeaveOnly) {
+                _previousSelectedItemPair = _selectedItemPair;
+                _pendingFire = true;
+            }
 
             // Assign the new selected item and raise the event
             _selectedItemPair = newSelectedItemPair;
@@ -159,12 +176,9 @@ namespace AdvancedControls.AdvancedCombobox {
         private async void comboBox1_Leave(object sender, EventArgs e) {
             var tempPreviousItem = _previousSelectedItemPair;
 
-            if (tempPreviousItem == null) return;
+            if (!_pendingFire) return;
 
-            // Reset previous value so that this case is identified next time
-            _previousSelectedItemPair = null;
-
-            var args = new SelectedItemChangedEventArgs<T>(_selectedItemPair?.Item2, tempPreviousItem.Item2);
+            var args = new SelectedItemChangedEventArgs<T>(_selectedItemPair?.Item2, tempPreviousItem?.Item2);
             await OnSelectedItemChangedAsync(args);
         }
     }
